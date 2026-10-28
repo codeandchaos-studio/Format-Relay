@@ -1,0 +1,28 @@
+# Node & Frontend
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# Rust & Tauri
+/src-tauri/target/
+/target/
+**/*.rs.bk
+Cargo.lock
+
+# Operating System Files
+.DS_Store
+Thumbs.db
+*.tmp
+*.part
+
+# Environment & Editor
+.env
+.env.local
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
