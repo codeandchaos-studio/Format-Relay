@@ -8,7 +8,7 @@
 </p>
 
 <p align="center">
-  <a href="#-the-gta-v-weapon-wheel-mechanic"><img src="https://img.shields.io/badge/Format%20Wheel-GTA%20V%20Tactical%20HUD-E5A93C?style=for-the-badge&logoColor=181512" alt="Format Wheel" /></a>
+  <a href="#-the-gta-v-weapon-wheel-mechanic"><img src="https://img.shields.io/badge/Format%20Wheel-GTA%20V%20Tactical%20HUD-6366F1?style=for-the-badge&logoColor=0F172A" alt="Format Wheel" /></a>
   <a href="#-official-windows-releases"><img src="https://img.shields.io/badge/Version-v1.0.0%20Starter-F59E0B?style=for-the-badge" alt="Version 1.0.0" /></a>
   <a href="#-studio-identity--ownership"><img src="https://img.shields.io/badge/Studio-Code%20%26%20Chaos-B45309?style=for-the-badge" alt="Code & Chaos Studio" /></a>
   <img src="https://img.shields.io/badge/Platform-Windows%2010%20%7C%2011-0284C7?style=for-the-badge&logo=windows" alt="Windows 10/11" />

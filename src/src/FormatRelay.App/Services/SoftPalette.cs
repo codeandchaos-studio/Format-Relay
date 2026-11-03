@@ -12,7 +12,7 @@ namespace FormatRelay.App.Services;
 internal static class SoftPalette
 {
     /// <summary>The default accent colour (the first swatch of the Theme page).</summary>
-    public const string DefaultAccent = "#7F77DD";
+    public const string DefaultAccent = "#6366F1";
 
     /// <summary>The default corner radius (ThemeSettings.CornerRadius).</summary>
     public const double DefaultCornerRadius = 16;

@@ -13,10 +13,10 @@ public sealed class SoftBackdrop : Control
         Border.BackgroundProperty.AddOwner<SoftBackdrop>();
 
     public static readonly StyledProperty<Color> AccentProperty =
-        AvaloniaProperty.Register<SoftBackdrop, Color>(nameof(Accent), Color.Parse("#7F77DD"));
+        AvaloniaProperty.Register<SoftBackdrop, Color>(nameof(Accent), Color.Parse("#6366F1"));
 
     public static readonly StyledProperty<Color> SecondProperty =
-        AvaloniaProperty.Register<SoftBackdrop, Color>(nameof(Second), Color.Parse("#1D9E75"));
+        AvaloniaProperty.Register<SoftBackdrop, Color>(nameof(Second), Color.Parse("#0EA5E9"));
 
     /// <summary>How strong the blobs are (lower in dark mode).</summary>
     public static readonly StyledProperty<double> IntensityProperty =

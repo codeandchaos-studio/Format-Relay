@@ -280,9 +280,7 @@ public partial class App : Application
         // Optional: no card, the sidebar button only. Frequent releases no longer ask every day.
         updates.UpdateFound += (_, version) =>
         {
-            if (updates.Level == UpdateLevel.Optional
-                || updates.Level == UpdateLevel.Recommended && store.Settings.NotifiedUpdateVersion == version)
-                return;
+            if (store.Settings.NotifiedUpdateVersion == version) return;
             store.Settings.NotifiedUpdateVersion = version;
             store.SaveSettings();
             AppHost.Get<WindowService>().ShowUpdateNotice(version);
@@ -291,7 +289,7 @@ public partial class App : Application
         // The last run's update failed after FormatRelay closed (Linux): the installer rolled back and started this copy.
         if (updates.CheckPendingFailure(store.Directory))
             Dispatcher.UIThread.Post(async () => await AppHost.Get<WindowService>().ShowUpdateRolledBackAsync(updates.LastFailureLogPath));
-        updates.StartPeriodicChecks(() => store.Settings.CheckForUpdates, TimeSpan.FromSeconds(20));
+        updates.StartPeriodicChecks(() => store.Settings.CheckForUpdates, TimeSpan.FromSeconds(5));
         DispatcherTimer.RunOnce(() => NotifyEngineUpdates(store), TimeSpan.FromSeconds(25));
     }
 

@@ -21,18 +21,18 @@ public sealed class FormatRelayLogo : Control
     // formatrelay.svg: the slices (path, colour, offset of the "pulled out" slice) and the file in the middle.
     private static readonly (Geometry Path, IBrush Fill, Vector Offset)[] Slices =
     [
-        (Geometry.Parse("M154.61 65.27 A216 216 0 0 1 357.39 65.27 L304.82 164.17 A104 104 0 0 0 207.18 164.17 Z"), Brush("#E5A93C"), default),
-        (Geometry.Parse("M373.66 67.74 A222 222 0 0 1 477.86 248.23 L359.94 252.36 A104 104 0 0 0 311.12 167.81 Z"), Brush("#F59E0B"), new Vector(13.86, -8)),
-        (Geometry.Parse("M471.87 263.56 A216 216 0 0 1 370.48 439.17 L311.12 344.19 A104 104 0 0 0 359.94 259.64 Z"), Brush("#E5A93C"), default),
-        (Geometry.Parse("M357.39 446.73 A216 216 0 0 1 154.61 446.73 L207.18 347.83 A104 104 0 0 0 304.82 347.83 Z"), Brush("#B45309"), default),
-        (Geometry.Parse("M141.52 439.17 A216 216 0 0 1 40.13 263.56 L152.06 259.64 A104 104 0 0 0 200.88 344.19 Z"), Brush("#E5A93C"), default),
-        (Geometry.Parse("M40.13 248.44 A216 216 0 0 1 141.52 72.83 L200.88 167.81 A104 104 0 0 0 152.06 252.36 Z"), Brush("#B45309"), default),
+        (Geometry.Parse("M154.61 65.27 A216 216 0 0 1 357.39 65.27 L304.82 164.17 A104 104 0 0 0 207.18 164.17 Z"), Brush("#6366F1"), default),
+        (Geometry.Parse("M373.66 67.74 A222 222 0 0 1 477.86 248.23 L359.94 252.36 A104 104 0 0 0 311.12 167.81 Z"), Brush("#4F46E5"), new Vector(13.86, -8)),
+        (Geometry.Parse("M471.87 263.56 A216 216 0 0 1 370.48 439.17 L311.12 344.19 A104 104 0 0 0 359.94 259.64 Z"), Brush("#6366F1"), default),
+        (Geometry.Parse("M357.39 446.73 A216 216 0 0 1 154.61 446.73 L207.18 347.83 A104 104 0 0 0 304.82 347.83 Z"), Brush("#0EA5E9"), default),
+        (Geometry.Parse("M141.52 439.17 A216 216 0 0 1 40.13 263.56 L152.06 259.64 A104 104 0 0 0 200.88 344.19 Z"), Brush("#6366F1"), default),
+        (Geometry.Parse("M40.13 248.44 A216 216 0 0 1 141.52 72.83 L200.88 167.81 A104 104 0 0 0 152.06 252.36 Z"), Brush("#0EA5E9"), default),
     ];
 
     private static readonly Geometry FileBody = Geometry.Parse("M222 212 h44 l24 24 v64 h-68 z");
     private static readonly Geometry FileCorner = Geometry.Parse("M266 212 v24 h24 z");
-    private static readonly IBrush FileBodyBrush = Brush("#181512");
-    private static readonly IBrush FileCornerBrush = Brush("#FAF6EB");
+    private static readonly IBrush FileBodyBrush = Brush("#0F172A");
+    private static readonly IBrush FileCornerBrush = Brush("#F8FAFC");
 
     private readonly FrameLoop _loop;
     private double _progress;

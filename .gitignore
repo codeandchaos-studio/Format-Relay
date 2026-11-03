@@ -36,3 +36,6 @@ obj/
 *.sln.docstates
 .cache/
 publish/
+
+# Scratch & Temporary Build Artifacts
+scratch/
