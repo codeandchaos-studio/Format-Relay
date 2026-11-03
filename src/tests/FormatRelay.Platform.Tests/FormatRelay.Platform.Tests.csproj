@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\FormatRelay.Platform.Linux\FormatRelay.Platform.Linux.csproj" />
+    <ProjectReference Include="..\..\src\FormatRelay.Platform.MacOS\FormatRelay.Platform.MacOS.csproj" />
+    <ProjectReference Include="..\..\src\FormatRelay.Platform.Windows\FormatRelay.Platform.Windows.csproj" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit.v3" />
+    <PackageReference Include="xunit.runner.visualstudio" />
+    <Using Include="Xunit" />
+  </ItemGroup>
+</Project>

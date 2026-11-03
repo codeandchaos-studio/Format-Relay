@@ -1,33 +1,43 @@
-CODE & CHAOS SOURCE-AVAILABLE VIEW-ONLY LICENSE
-Copyright (c) 2026 Code & Chaos Studio. All Rights Reserved.
+CODE & CHAOS / CODE & SHARE STUDIO PROPRIETARY SOURCE-AVAILABLE VIEW-ONLY LICENSE
+Copyright (c) 2026 Code & Chaos Studio (Code & Share Studio). All Rights Reserved.
 
-This software, its source code, compiled binaries, visual interface designs, 
-and associated documentation are the proprietary intellectual property of 
-Code & Chaos Studio.
+OWNERSHIP & EXCLUSIVE AUTHORSHIP:
+This software, source code, graphic assets, interface architecture, compiled binaries, 
+and documentation are the exclusive proprietary intellectual property of the three 
+founding developers and owners of Code & Chaos Studio (operating also as Code & Share Studio).
 
-TERMS AND CONDITIONS FOR ACCESS:
+STRICT TERMS AND CONDITIONS:
 
-1. VIEW-ONLY ACCESS
-   You are granted permission to inspect, read, review, and audit the source code 
-   of this repository exclusively for technical transparency and security verification.
+1. EXCLUSIVE CORE DEVELOPMENT
+   This project is strictly developed, modified, maintained, and updated by the three 
+   designated developer-owners of Code & Chaos Studio. No external contributions, 
+   unauthorized modifications, or third-party alterations are permitted.
 
-2. PROHIBITION OF CLONING AND SCRAPING
-   Unauthorized cloning (git clone), mirroring, automated scraping, downloading 
-   of repository source trees for re-hosting, or repackaging is strictly prohibited.
+2. PROHIBITION OF CLONING AND MIRRORING
+   Cloning (git clone), mirroring, automated scraping, batch downloading, or re-hosting 
+   of this repository and its source tree is strictly prohibited. The repository is 
+   maintained for view-only reference and verification by its owners.
 
 3. PROHIBITION OF FORKING AND DERIVATIVE WORKS
-   You may not fork this repository, create derivative works, modify, adapt, 
-   translate, or create competing applications based upon this codebase.
+   You are expressly forbidden from forking this repository on GitHub or any other hosting 
+   service. Creating derivative works, modifying, adapting, translating, or building competing 
+   software based upon this codebase or its architectural design is strictly prohibited.
 
-4. PROHIBITION OF REDISTRIBUTION AND COMMERCIALIZATION
-   No part of this software, including its source code, compiled binaries, brand marks, 
-   or assets, may be sold, resold, sublicensed, rented, bundled into commercial products, 
-   or redistributed through unauthorized channels.
+4. PROHIBITION OF REUSE, REDISTRIBUTION, AND COMMERCIALIZATION
+   No part of this software, whether in source form or compiled binary format, may be 
+   reused, redistributed, repackaged, resold, sublicensed, or integrated into any commercial 
+   or free distribution without explicit, prior written authorization from the owners.
 
-5. PROHIBITION OF REVERSE ENGINEERING
-   You may not decompile, disassemble, reverse engineer, or attempt to reconstruct 
-   or discover any source code or underlying ideas of compiled binaries.
+5. OFFICIAL RELEASES ONLY
+   End-users are authorized only to download and execute official compiled release binaries 
+   published directly by Code & Chaos Studio / Code & Share Studio. All patches, features, 
+   and maintenance updates are delivered exclusively by the core studio team.
 
+6. PROHIBITION OF REVERSE ENGINEERING
+   Decompilation, disassembly, reverse engineering, or attempting to reconstruct the 
+   source code, internal algorithms, or assets from compiled binaries is strictly forbidden.
+
+DISCLAIMER:
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED. 
-IN NO EVENT SHALL CODE & CHAOS STUDIO BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER 
-LIABILITY ARISING FROM THE USE OF THIS SOFTWARE.
+IN NO EVENT SHALL CODE & CHAOS STUDIO / CODE & SHARE STUDIO OR ITS FOUNDERS BE LIABLE 
+FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY ARISING FROM OR IN CONNECTION WITH THE SOFTWARE.

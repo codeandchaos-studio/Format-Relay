@@ -1,0 +1,33 @@
+<!--
+  FormatRelay.Cli: the "format-relay" command line. Converts files and watches folders without the tray app, with the same
+  engines, presets and settings. Published next to FormatRelay.exe as format-relay-cli.exe (one runtime for both); the installer
+  puts a "format-relay" shim on PATH (cli\format-relay.cmd).
+-->
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>format-relay-cli</AssemblyName>
+    <RootNamespace>FormatRelay.Cli</RootNamespace>
+    <ApplicationIcon>..\FormatRelay.App\Assets\Icons\format-relay.ico</ApplicationIcon>
+    <!-- The Recycle Bin is IFileOperation, a COM interface (FormatRelay.Platform.Windows). -->
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FormatRelay.Core\FormatRelay.Core.csproj" />
+    <ProjectReference Include="..\FormatRelay.Engines\FormatRelay.Engines.csproj" />
+    <!-- "Replace the original" moves originals to the Recycle Bin / Trash (MoveToTrash), as the app does. -->
+    <ProjectReference Include="..\FormatRelay.Platform.Windows\FormatRelay.Platform.Windows.csproj" />
+    <ProjectReference Include="..\FormatRelay.Platform.Linux\FormatRelay.Platform.Linux.csproj" />
+    <ProjectReference Include="..\FormatRelay.Platform.MacOS\FormatRelay.Platform.MacOS.csproj" />
+  </ItemGroup>
+
+  <!-- Error messages and built-in preset names, in English (the app's translation file). -->
+  <ItemGroup>
+    <EmbeddedResource Include="..\FormatRelay.App\Assets\i18n\en.json" LogicalName="FormatRelay.Cli.en.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="FormatRelay.Cli.Tests" />
+  </ItemGroup>
+</Project>

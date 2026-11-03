@@ -1,0 +1,26 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/FormatRelay.Core/FormatRelay.Core.csproj" />
+    <Project Path="src/FormatRelay.Engines/FormatRelay.Engines.csproj" />
+    <Project Path="src/FormatRelay.Platform.Windows/FormatRelay.Platform.Windows.csproj" />
+    <Project Path="src/FormatRelay.Platform.Linux/FormatRelay.Platform.Linux.csproj" />
+    <Project Path="src/FormatRelay.Platform.MacOS/FormatRelay.Platform.MacOS.csproj" />
+    <Project Path="src/FormatRelay.App/FormatRelay.App.csproj" />
+    <Project Path="src/FormatRelay.Cli/FormatRelay.Cli.csproj" />
+    <Project Path="src/FormatRelay.Setup/FormatRelay.Setup.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/FormatRelay.Core.Tests/FormatRelay.Core.Tests.csproj" />
+    <Project Path="tests/FormatRelay.Engines.Tests/FormatRelay.Engines.Tests.csproj" />
+    <Project Path="tests/FormatRelay.App.Tests/FormatRelay.App.Tests.csproj" />
+    <Project Path="tests/FormatRelay.Cli.Tests/FormatRelay.Cli.Tests.csproj" />
+    <Project Path="tests/FormatRelay.Platform.Tests/FormatRelay.Platform.Tests.csproj" />
+    <Project Path="tests/FormatRelay.Setup.Tests/FormatRelay.Setup.Tests.csproj" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+    <File Path="global.json" />
+    <File Path=".editorconfig" />
+  </Folder>
+</Solution>

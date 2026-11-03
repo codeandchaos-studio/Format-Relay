@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>FormatRelay.Platform.Linux</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FormatRelay.Core\FormatRelay.Core.csproj" />
+    <InternalsVisibleTo Include="FormatRelay.Platform.Tests" />
+  </ItemGroup>
+</Project>

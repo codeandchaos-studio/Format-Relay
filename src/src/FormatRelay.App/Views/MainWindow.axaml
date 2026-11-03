@@ -1,0 +1,74 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:FormatRelay.App.ViewModels"
+        x:Class="FormatRelay.App.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Title="Format Relay"
+        Icon="avares://FormatRelay/Assets/Icons/format-relay.ico"
+        Width="1100" Height="780" MinWidth="860" MinHeight="580"
+        WindowStartupLocation="CenterScreen">
+  <Grid RowDefinitions="Auto,*">
+    <!-- Top Navigation Header -->
+    <Border Grid.Row="0" Background="{DynamicResource SurfaceBrush}" BorderBrush="{DynamicResource SubtleBorderBrush}" BorderThickness="0,0,0,1" Padding="20,12">
+      <Grid ColumnDefinitions="Auto,*,Auto">
+        <!-- Brand Identity: Logo + Title + Studio -->
+        <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="14" VerticalAlignment="Center">
+          <Image Source="avares://FormatRelay/Assets/Icons/format-relay.png" Width="34" Height="34" VerticalAlignment="Center" />
+          <StackPanel VerticalAlignment="Center" Spacing="1">
+            <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+              <TextBlock Text="Format Relay" FontSize="18" FontWeight="Bold" Foreground="{DynamicResource ForegroundBrush}" VerticalAlignment="Center" />
+              <Border Background="{DynamicResource AccentBrush}" CornerRadius="4" Padding="6,1" VerticalAlignment="Center">
+                <TextBlock Text="v1.0" FontSize="11" FontWeight="Bold" Foreground="#181512" />
+              </Border>
+            </StackPanel>
+            <TextBlock Text="Code &amp; Chaos Studio" FontSize="11" Foreground="{DynamicResource AccentBrush}" FontWeight="SemiBold" />
+          </StackPanel>
+        </StackPanel>
+
+        <!-- Centered Navigation Tabs -->
+        <ListBox Grid.Column="1" Classes="topnav" ItemsSource="{Binding Items}" SelectedItem="{Binding SelectedItem}"
+                 HorizontalAlignment="Center" VerticalAlignment="Center">
+          <ListBox.ItemsPanel>
+            <ItemsPanelTemplate>
+              <StackPanel Orientation="Horizontal" Spacing="4" />
+            </ItemsPanelTemplate>
+          </ListBox.ItemsPanel>
+          <ListBox.ItemTemplate>
+            <DataTemplate x:DataType="vm:NavItem">
+              <Border Background="Transparent" Padding="14,8" CornerRadius="8">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                  <PathIcon Classes="navicon" Width="16" Height="16" Data="{Binding Icon}" />
+                  <TextBlock Text="{Binding Title}" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="13" />
+                </StackPanel>
+              </Border>
+            </DataTemplate>
+          </ListBox.ItemTemplate>
+        </ListBox>
+
+        <!-- Right Side: Updates + Studio Portal -->
+        <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
+          <Button Classes="accent" Command="{Binding DownloadUpdateCommand}" IsVisible="{Binding Updates.IsUpdateAvailable}"
+                  Padding="12,6" ToolTip.Tip="{Binding UpdateTip}">
+            <StackPanel Orientation="Horizontal" Spacing="6">
+              <PathIcon Width="13" Height="13" Data="{StaticResource Icon.Download}" />
+              <TextBlock Text="Update" FontSize="12" FontWeight="SemiBold" />
+            </StackPanel>
+          </Button>
+          <Button Classes="navlink" Click="OnOpenGitHub" ToolTip.Tip="Code &amp; Chaos Studio Official Portal">
+            <Border BorderBrush="{DynamicResource AccentBrush}" BorderThickness="1" CornerRadius="6" Padding="10,6" Background="{DynamicResource SurfaceAltBrush}">
+              <StackPanel Orientation="Horizontal" Spacing="6">
+                <PathIcon Width="12" Height="12" Data="{StaticResource Icon.Code}" Foreground="{DynamicResource AccentBrush}" />
+                <TextBlock Text="Code &amp; Chaos" FontSize="12" FontWeight="Bold" Foreground="{DynamicResource AccentBrush}" />
+              </StackPanel>
+            </Border>
+          </Button>
+        </StackPanel>
+      </Grid>
+    </Border>
+
+    <!-- Page Body -->
+    <ScrollViewer Grid.Row="1" x:Name="PageScroller" VerticalScrollBarVisibility="{Binding PageScroll}">
+      <ContentControl Classes="page" Content="{Binding CurrentPage}" Margin="32,24,32,32" MaxWidth="1020" HorizontalAlignment="Stretch" />
+    </ScrollViewer>
+  </Grid>
+</Window>

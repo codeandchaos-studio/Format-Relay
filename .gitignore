@@ -1,6 +1,7 @@
 # Node & Frontend
 node_modules/
 dist/
+dist-release/
 dist-ssr/
 *.local
 
@@ -26,3 +27,12 @@ Thumbs.db
 *.njsproj
 *.sln
 *.sw?
+
+# .NET Build Output
+bin/
+obj/
+*.user
+*.userosscache
+*.sln.docstates
+.cache/
+publish/

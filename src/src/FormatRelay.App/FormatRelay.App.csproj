@@ -1,0 +1,79 @@
+<!--
+  FormatRelay.App: the Avalonia desktop application (tray, donut toolbar, settings window).
+-->
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <AssemblyName>FormatRelay</AssemblyName>
+    <RootNamespace>FormatRelay.App</RootNamespace>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Assets\Icons\format-relay.ico</ApplicationIcon>
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FormatRelay.Core\FormatRelay.Core.csproj" />
+    <ProjectReference Include="..\FormatRelay.Engines\FormatRelay.Engines.csproj" />
+    <ProjectReference Include="..\FormatRelay.Platform.Windows\FormatRelay.Platform.Windows.csproj" />
+    <ProjectReference Include="..\FormatRelay.Platform.Linux\FormatRelay.Platform.Linux.csproj" />
+    <ProjectReference Include="..\FormatRelay.Platform.MacOS\FormatRelay.Platform.MacOS.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" />
+    <PackageReference Include="Avalonia.Desktop" />
+    <PackageReference Include="Avalonia.Themes.Fluent" />
+    <PackageReference Include="Avalonia.Controls.ColorPicker" />
+    <PackageReference Include="AvaloniaUI.DiagnosticsSupport">
+      <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
+      <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="CommunityToolkit.Mvvm" />
+    <PackageReference Include="Markdig" />
+    <PackageReference Include="Microsoft.Extensions.Logging" />
+    <PackageReference Include="SharpHook" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <FormatRelayNativeWayland Condition="$(RuntimeIdentifier.StartsWith('linux')) Or ('$(RuntimeIdentifier)' == '' And $([MSBuild]::IsOSPlatform('Linux')))">true</FormatRelayNativeWayland>
+    <DefineConstants Condition="'$(FormatRelayNativeWayland)' == 'true'">$(DefineConstants);FORMAT_RELAY_NATIVE_WAYLAND</DefineConstants>
+  </PropertyGroup>
+
+  <!-- Linux-only Wayland packages to keep Windows and macOS binaries small -->
+  <ItemGroup Condition="'$(FormatRelayNativeWayland)' == 'true'">
+    <PackageReference Include="Avalonia.Wayland" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\**" />
+    <!-- Shown on the About page. -->
+    <AvaloniaResource Include="..\..\THIRD-PARTY-NOTICES.md" Link="Assets\THIRD-PARTY-NOTICES.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="FormatRelay.App.Tests" />
+  </ItemGroup>
+
+  <!-- Native debug symbols from NuGet packages (SkiaSharp, HarfBuzz: ~100 MB) are useless to users. -->
+  <Target Name="FormatRelayRemoveNativeSymbols" AfterTargets="Publish" Condition="'$(Configuration)' == 'Release'">
+    <ItemGroup>
+      <_FormatRelayNativePdb Include="$(PublishDir)lib*.pdb" />
+    </ItemGroup>
+    <Delete Files="@(_FormatRelayNativePdb)" />
+  </Target>
+
+  <!-- Repository URL for the updater / About page, taken from Directory.Build.props. -->
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+      <_Parameter1>RepositoryUrl</_Parameter1>
+      <_Parameter2>$(FormatRelayRepositoryUrl)</_Parameter2>
+    </AssemblyAttribute>
+    <!-- Published builds (installer, portable zip) set -p:FormatRelayRelease=true: only they register Explorer and startup
+         entries (UpdateService.IsReleaseBuild), so running from source leaves the user's system alone. -->
+    <AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute" Condition="'$(FormatRelayRelease)' == 'true'">
+      <_Parameter1>FormatRelayRelease</_Parameter1>
+      <_Parameter2>true</_Parameter2>
+    </AssemblyAttribute>
+  </ItemGroup>
+</Project>

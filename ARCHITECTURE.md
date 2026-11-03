@@ -53,7 +53,14 @@ Format Relay adheres to a decoupled, local-first desktop architecture. The front
 - Manages job lifecycle: Pending -> Running -> Completed / Failed / Cancelled.
 - Communicates granular progress (0 to 100%) and stage notifications back to the frontend through Tauri events.
 
-### 2.5 Engine Adapter Layer
+### 2.5 Format Wheel & Stage System
+- Cursor-anchored radial gesture wheel inspired by the GTA V weapon wheel mechanics, triggered on modifier key (`Shift` / `Ctrl`) + drag or direct file interaction.
+- Dynamically generates pie wedges matching compatible target formats (Video, Images, Documents, Audio, Structured Data).
+- Features 3D back-face flip (`Tab` / mouse wheel) for rapid tools: Crop, Rotate, Flip, Grayscale, Remove background, Pack ZIP (old PDF merge/split retired per specification).
+- Integrated Aspect Dial (`A` key) supporting aspect ratio framing (1:1, 4:3, 3:2, 16:9, original) with Crop & Save / Next.
+- Interactive "Try it here" sandbox stage with live file cards and instant "CONVERTED FILES" shelf.
+
+### 2.6 Engine Adapter Layer
 - Uniform trait `ConversionEngine`:
   - `name(&self) -> &'static str`
   - `can_handle(&self, from: &Format, to: &Format) -> bool`

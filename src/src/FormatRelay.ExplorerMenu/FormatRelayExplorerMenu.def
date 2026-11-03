@@ -1,0 +1,5 @@
+; Exports of the Explorer context-menu COM server (see FormatRelayExplorerMenu.c).
+LIBRARY FormatRelayExplorerMenu
+EXPORTS
+    DllGetClassObject PRIVATE
+    DllCanUnloadNow PRIVATE
