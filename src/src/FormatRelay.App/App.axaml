@@ -3,7 +3,7 @@
              xmlns:local="using:FormatRelay.App"
              x:Class="FormatRelay.App.App"
              Name="FormatRelay"
-             RequestedThemeVariant="Default">
+             RequestedThemeVariant="Light">
 
   <Application.DataTemplates>
     <!-- Maps FooPageViewModel → FooPage view (see ViewLocator.cs). -->

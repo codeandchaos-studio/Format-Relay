@@ -85,10 +85,10 @@ public sealed class UserDataStore
         var schema = Settings.SchemaVersion;
         SettingsMigrations.Apply(Settings);
         var libraryChanged = File.Exists(ProfilesPath) && SettingsMigrations.ApplyToLibrary(schema, Presets, Profiles);
-        EnsureConsistency();
+        var settingsUpgraded = EnsureConsistency();
 
         // Persist upgrades right away so they run once, even if the user never changes a setting.
-        if (schema < AppSettings.CurrentSchemaVersion && File.Exists(SettingsPath))
+        if ((schema < AppSettings.CurrentSchemaVersion || settingsUpgraded) && File.Exists(SettingsPath))
             Write(SettingsPath, Settings, FormatRelayJsonContext.Default.AppSettings);
         if (libraryChanged)
         {
@@ -286,8 +286,19 @@ public sealed class UserDataStore
     }
 
     /// <summary>Removes dangling preset references and guarantees at least one mixed-selection profile.</summary>
-    private void EnsureConsistency()
+    private bool EnsureConsistency()
     {
+        bool changed = false;
+        if (Settings.Theme.Accent == "#E5A93C" || Settings.Theme.Accent == "#6366F1" || string.IsNullOrWhiteSpace(Settings.Theme.Accent))
+        {
+            Settings.Theme.Accent = "#EA4122";
+            changed = true;
+        }
+        if (Settings.Theme.Mode != ThemeMode.Light)
+        {
+            Settings.Theme.Mode = ThemeMode.Light;
+            changed = true;
+        }
         var ids = Presets.Select(p => p.Id).ToHashSet();
         foreach (var profile in Profiles)
         {
@@ -316,6 +327,7 @@ public sealed class UserDataStore
             mixed.BackPresetIds = (mixed.BackPresetIds ?? []).Where(ids.Contains).ToList();
             Profiles.Add(mixed);
         }
+        return changed;
     }
 
     private T? Read<T>(string path, JsonTypeInfo<T> type) where T : class

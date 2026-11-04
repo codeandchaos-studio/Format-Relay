@@ -21,7 +21,7 @@ public sealed class ThemeService(IPlatformServices platform)
 
     /// <summary>Accent swatches offered in the Theme page.</summary>
     public static readonly IReadOnlyList<string> Swatches =
-        ["#6366F1", "#4F46E5", "#0EA5E9", "#38BDF8", "#10B981", "#8B5CF6", "#EC4899", "#1E293B", "#F8FAFC"];
+        ["#EA4122", "#E5533D", "#D43516", "#FF6B4A", "#FA8F54", "#6366F1", "#10B981", "#1E293B", "#F8FAFC"];
 
     /// <summary>Curated theme preset with coordinated light and dark accent colours.</summary>
     public sealed record ThemePreset(string Key, string LightHex, string DarkHex)
@@ -74,12 +74,7 @@ public sealed class ThemeService(IPlatformServices platform)
 
         CurrentStyle = theme.Style;
 
-        app.RequestedThemeVariant = theme.Mode switch
-        {
-            ThemeMode.Light => ThemeVariant.Light,
-            ThemeMode.Dark => ThemeVariant.Dark,
-            _ => ThemeVariant.Default,
-        };
+        app.RequestedThemeVariant = ThemeVariant.Light;
 
         // Determine effective accent colors:
         // If a coordinated light/dark preset is active, use its respective variant colors.
@@ -87,6 +82,8 @@ public sealed class ThemeService(IPlatformServices platform)
         if (!string.IsNullOrEmpty(theme.PresetKey))
             preset = Presets.FirstOrDefault(p => string.Equals(p.Key, theme.PresetKey, StringComparison.OrdinalIgnoreCase));
 
+        if (theme.Accent == "#E5A93C" || theme.Accent == "#6366F1" || string.IsNullOrWhiteSpace(theme.Accent))
+            theme.Accent = SoftPalette.DefaultAccent;
         var defaultColor = Color.Parse(SoftPalette.DefaultAccent);
         var baseColor = Color.TryParse(theme.Accent, out var parsed) ? parsed : defaultColor;
 

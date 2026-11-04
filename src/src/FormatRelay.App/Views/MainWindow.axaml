@@ -16,12 +16,12 @@
           <Image Source="avares://FormatRelay/Assets/Icons/format-relay.png" Width="34" Height="34" VerticalAlignment="Center" />
           <StackPanel VerticalAlignment="Center" Spacing="1">
             <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
-              <TextBlock Text="Format Relay" FontSize="18" FontWeight="Bold" Foreground="{DynamicResource ForegroundBrush}" VerticalAlignment="Center" />
+              <TextBlock Text="Format Relay" FontSize="18" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryBrush}" VerticalAlignment="Center" />
               <Border Background="{DynamicResource AccentBrush}" CornerRadius="4" Padding="6,1" VerticalAlignment="Center">
-                <TextBlock Text="v1.0" FontSize="11" FontWeight="Bold" Foreground="#181512" />
+                <TextBlock Text="v1.0" FontSize="11" FontWeight="Bold" Foreground="#FFFFFF" />
               </Border>
             </StackPanel>
-            <TextBlock Text="Code &amp; Chaos Studio · Every file. Ready for what's next." FontSize="11" Foreground="{DynamicResource AccentBrush}" FontWeight="SemiBold" />
+            <TextBlock Text="Code &amp; Chaos Studio &#x25C6; Every file. Ready for what's next." FontSize="11" Foreground="{DynamicResource AccentBrush}" FontWeight="SemiBold" />
           </StackPanel>
         </StackPanel>
 
