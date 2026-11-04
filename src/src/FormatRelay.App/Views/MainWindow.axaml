@@ -6,7 +6,8 @@
         Title="Format Relay"
         Icon="avares://FormatRelay/Assets/Icons/format-relay.ico"
         Width="1100" Height="780" MinWidth="860" MinHeight="580"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource PageBrush}">
   <Grid RowDefinitions="Auto,*">
     <!-- Top Navigation Header -->
     <Border Grid.Row="0" Background="{DynamicResource SurfaceBrush}" BorderBrush="{DynamicResource SubtleBorderBrush}" BorderThickness="0,0,0,1" Padding="20,12">
@@ -54,7 +55,7 @@
               <TextBlock Text="Update" FontSize="12" FontWeight="SemiBold" />
             </StackPanel>
           </Button>
-          <Button Classes="navlink" Click="OnOpenGitHub" ToolTip.Tip="Code &amp; Chaos Studio Official Portal">
+          <Button Classes="navlink" Click="OnOpenGitHub" ToolTip.Tip="Code &amp; Chaos Studio Official Portal (codeandchaos-studio.pages.dev)">
             <Border BorderBrush="{DynamicResource AccentBrush}" BorderThickness="1" CornerRadius="6" Padding="10,6" Background="{DynamicResource SurfaceAltBrush}">
               <StackPanel Orientation="Horizontal" Spacing="6">
                 <PathIcon Width="12" Height="12" Data="{StaticResource Icon.Code}" Foreground="{DynamicResource AccentBrush}" />

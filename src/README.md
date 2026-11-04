@@ -108,7 +108,7 @@ Format Relay is engineered from scratch for minimum latency and maximum desktop 
 - **Studio**: **CODE & CHAOS STUDIO** *(operating also as Code & Share Studio)*
 - **Core Engineering**: Owned, designed, and developed exclusively by the **three founding developer-owners**.
 - **Official Repository**: [github.com/codeandchaos-studio/Format-Relay](https://github.com/codeandchaos-studio/Format-Relay)
-- **Official Portal**: [codeandchaos.studio](https://codeandchaos.studio/)
+- **Official Portal**: [codeandchaos-studio.pages.dev](https://codeandchaos-studio.pages.dev/)
 - **Pricing**: **100% Free Lifetime Tool** for all users.
 
 > [!IMPORTANT]

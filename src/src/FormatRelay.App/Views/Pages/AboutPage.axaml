@@ -101,6 +101,12 @@
             <TextBlock Text="100% Offline / Local-First" Foreground="{DynamicResource AccentBrush}" FontWeight="SemiBold" FontSize="12" />
           </Border>
         </StackPanel>
+        <Button Classes="ghost" Padding="0" Click="OnOpenStudioPortal" Margin="0,4,0,0">
+          <StackPanel Orientation="Horizontal" Spacing="6">
+            <PathIcon Width="13" Height="13" Data="{StaticResource Icon.Link}" Foreground="{DynamicResource AccentBrush}" />
+            <TextBlock Text="Official Portal: https://codeandchaos-studio.pages.dev/" Foreground="{DynamicResource AccentBrush}" FontWeight="SemiBold" />
+          </StackPanel>
+        </Button>
       </StackPanel>
     </Border>
     <Border Classes="card">

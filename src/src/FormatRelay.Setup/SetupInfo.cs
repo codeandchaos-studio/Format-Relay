@@ -11,7 +11,7 @@ public static class SetupInfo
             .FirstOrDefault(a => a.Key == "RepositoryUrl")?.Value ?? "https://github.com/codeandchaos-studio/Format-Relay";
 
     /// <summary>The website: one big download button.</summary>
-    public const string WebsiteUrl = "https://codeandchaos.studio/";
+    public const string WebsiteUrl = "https://codeandchaos-studio.pages.dev/";
 
     /// <summary>The version this Setup program was built as (the payload says which FormatRelay it installs).</summary>
     public static string Version =>

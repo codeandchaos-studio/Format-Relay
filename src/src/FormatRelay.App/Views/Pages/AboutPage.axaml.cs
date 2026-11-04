@@ -33,4 +33,9 @@ public partial class AboutPage : UserControl
         if (TopLevel.GetTopLevel(this) is { } top)
             await top.Launcher.LaunchUriAsync(new Uri(Services.UpdateService.NewIssueUrl));
     }
+    private async void OnOpenStudioPortal(object? sender, RoutedEventArgs e)
+    {
+        if (TopLevel.GetTopLevel(this) is { } top)
+            await top.Launcher.LaunchUriAsync(new Uri("https://codeandchaos-studio.pages.dev/"));
+    }
 }

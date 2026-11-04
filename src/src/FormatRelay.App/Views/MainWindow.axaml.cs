@@ -25,8 +25,7 @@ public partial class MainWindow : Window
 
     private async void OnOpenGitHub(object? sender, RoutedEventArgs e)
     {
-        if (DataContext is MainWindowViewModel vm)
-            await Launcher.LaunchUriAsync(new Uri(vm.RepositoryUrl));
+        await Launcher.LaunchUriAsync(new Uri("https://codeandchaos-studio.pages.dev/"));
     }
 
 

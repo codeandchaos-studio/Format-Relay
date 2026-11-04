@@ -87,7 +87,8 @@ public sealed partial class UpdateService : ObservableObject
     public static string LatestReleaseUrl => RepositoryUrl.TrimEnd('/') + "/releases/latest";
 
     /// <summary>The website: one big download button, friendlier than the GitHub release page.</summary>
-    public const string WebsiteUrl = "https://formatrelay.sh/";
+    public const string WebsiteUrl = "https://codeandchaos-studio.pages.dev/";
+    public const string StudioUrl = "https://codeandchaos-studio.pages.dev/";
 
     /// <summary>
     /// True when this copy was installed by Setup on Windows (uninstall.exe; the Inno Setup installer of 1.x put unins000.exe there)
