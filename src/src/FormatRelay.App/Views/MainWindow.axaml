@@ -21,7 +21,7 @@
                 <TextBlock Text="v1.0" FontSize="11" FontWeight="Bold" Foreground="#181512" />
               </Border>
             </StackPanel>
-            <TextBlock Text="Code &amp; Chaos Studio" FontSize="11" Foreground="{DynamicResource AccentBrush}" FontWeight="SemiBold" />
+            <TextBlock Text="Code &amp; Chaos Studio · Every file. Ready for what's next." FontSize="11" Foreground="{DynamicResource AccentBrush}" FontWeight="SemiBold" />
           </StackPanel>
         </StackPanel>
 

@@ -23,7 +23,10 @@
                   AutomationProperties.Name="{DynamicResource common.close}">
             <PathIcon Width="12" Height="12" Data="{StaticResource Icon.Close}" />
           </Button>
-          <TextBlock x:Name="TitleText" FontWeight="SemiBold" TextWrapping="Wrap" VerticalAlignment="Center" />
+          <StackPanel VerticalAlignment="Center" Spacing="1">
+            <TextBlock x:Name="TitleText" FontWeight="Bold" TextWrapping="Wrap" />
+            <TextBlock Text="Every file. Ready for what's next." FontSize="11" Foreground="{DynamicResource AccentBrush}" FontWeight="SemiBold" />
+          </StackPanel>
         </DockPanel>
         <StackPanel Spacing="4">
           <Border x:Name="LevelPill" HorizontalAlignment="Left" CornerRadius="999" Padding="8,2">

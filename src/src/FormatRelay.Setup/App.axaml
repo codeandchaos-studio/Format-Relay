@@ -2,8 +2,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="FormatRelay.Setup.App"
              Name="FormatRelay Setup"
-             RequestedThemeVariant="Default">
-  <!-- Light or dark follows Windows (RequestedThemeVariant="Default"), like FormatRelay's "System" theme. -->
+             RequestedThemeVariant="Light">
+  <!-- Light or dark follows Windows (RequestedThemeVariant="Light"), like FormatRelay's "System" theme. -->
   <Application.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
