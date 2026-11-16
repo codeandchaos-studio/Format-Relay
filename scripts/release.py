@@ -324,10 +324,10 @@ def main():
         print(f"=== Bumping version: v{old_v} -> v{new_v} ({cmd}) ===")
         update_version_files(new_v)
 
-    # Check if binaries exist, if not build them
+    # Always build fresh executables for version bumps (patch, minor, major) or if binaries are missing
     installer_path = os.path.join(RELEASE_WIN_DIR, f"FORMAT_RELAY_{new_v}_Setup.exe")
     portable_path = os.path.join(RELEASE_WIN_DIR, "FORMAT_RELAY_Portable.exe")
-    if not os.path.exists(installer_path) or not os.path.exists(portable_path):
+    if cmd in ["patch", "minor", "major"] or not os.path.exists(installer_path) or not os.path.exists(portable_path):
         build_executables(new_v)
     else:
         print(f"Found existing release deliverables in {RELEASE_WIN_DIR}:")
