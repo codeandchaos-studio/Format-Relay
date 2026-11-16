@@ -25,7 +25,7 @@ public partial class MainWindow : Window
 
     private async void OnOpenGitHub(object? sender, RoutedEventArgs e)
     {
-        await Launcher.LaunchUriAsync(new Uri("https://codeandchaos-studio.pages.dev/"));
+        await Launcher.LaunchUriAsync(new Uri("https://codeandchaos.dpdns.org/"));
     }
 
 

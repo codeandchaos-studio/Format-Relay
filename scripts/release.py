@@ -16,7 +16,7 @@ RELEASE_WIN_DIR = os.path.join(ROOT_DIR, "dist", "release", "windows")
 DOTNET_DIR = r"C:\Users\Dharshan.V\.dotnet"
 DOTNET_EXE = os.path.join(DOTNET_DIR, "dotnet.exe") if os.path.exists(os.path.join(DOTNET_DIR, "dotnet.exe")) else "dotnet"
 
-STUDIO_URL = "https://codeandchaos-studio.pages.dev/"
+STUDIO_URL = "https://codeandchaos.dpdns.org/"
 REPO_OWNER = "codeandchaos-studio"
 REPO_NAME = "Format-Relay"
 

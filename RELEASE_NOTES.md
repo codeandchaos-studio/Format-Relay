@@ -1,7 +1,7 @@
 # Format Relay v1.0.0
 
 **Official Release by Code & Chaos Studio**  
-🌐 **Official Portal:** [https://codeandchaos-studio.pages.dev/](https://codeandchaos-studio.pages.dev/)  
+🌐 **Official Portal:** [https://codeandchaos.dpdns.org/](https://codeandchaos.dpdns.org/)  
 📁 **Repository:** [github.com/codeandchaos-studio/Format-Relay](https://github.com/codeandchaos-studio/Format-Relay)
 
 ---

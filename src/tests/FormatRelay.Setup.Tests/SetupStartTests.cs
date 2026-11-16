@@ -115,11 +115,11 @@ public class SetupStartTests
     public void Every_language_says_the_download_is_incomplete()
     {
         var english = new SetupTexts("en")["installer.error.incomplete"];
-        Assert.Contains("formatrelay.sh", english);
+        Assert.Contains("codeandchaos.dpdns.org", english);
         Assert.All(SetupTexts.Languages, l =>
         {
             Assert.True(SetupTexts.Load(l.Code).TryGetValue("installer.error.incomplete", out var text), l.Code);
-            Assert.Contains("formatrelay.sh", text);
+            Assert.Contains("codeandchaos.dpdns.org", text);
         });
     }
 

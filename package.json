@@ -2,7 +2,7 @@
   "name": "format-relay",
   "version": "1.0.0",
   "description": "Tactical local-first file conversion suite by Code & Chaos Studio",
-  "homepage": "https://codeandchaos-studio.pages.dev/",
+  "homepage": "https://codeandchaos.dpdns.org/",
   "private": true,
   "scripts": {
     "release": "python scripts/release.py current",
