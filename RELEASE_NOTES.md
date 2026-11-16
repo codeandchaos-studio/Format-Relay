@@ -1,4 +1,4 @@
-# Format Relay v1.0.0
+# Format Relay v1.0.1
 
 **Official Release by Code & Chaos Studio**  
 🌐 **Official Portal:** [https://codeandchaos.dpdns.org/](https://codeandchaos.dpdns.org/)  
@@ -15,5 +15,5 @@
 - **Zero Cloud Dependency:** Completely private, telemetry-free, lifetime free utility.
 
 ### 📦 Release Deliverables
-- `FORMAT_RELAY_1.0.0_Setup.exe`: Official Windows Installer with frameless wordmark loading animations
+- `FORMAT_RELAY_1.0.1_Setup.exe`: Official Windows Installer with frameless wordmark loading animations
 - `FORMAT_RELAY_Portable.exe`: Standalone portable zero-install single executable
