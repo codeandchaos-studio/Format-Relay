@@ -137,8 +137,13 @@ def build_executables(version):
     portable_dest = os.path.join(RELEASE_WIN_DIR, "FORMAT_RELAY_Portable.exe")
     shutil.copyfile(os.path.join(single_temp, "FormatRelay.exe"), portable_dest)
 
-    # Clean extraneous files in dist/release/windows so ONLY two .exe exist
-    valid_files = [f"FORMAT_RELAY_{version}_Setup.exe", "FORMAT_RELAY_Portable.exe"]
+    # Clean extraneous files in dist/release/windows
+    valid_files = [
+        f"FORMAT_RELAY_{version}_Setup.exe",
+        "FORMAT_RELAY_Portable.exe",
+        f"FormatRelay-{version}-win-Setup.exe",
+        f"FormatRelay-{version}-SHA256SUMS.txt"
+    ]
     for f in os.listdir(RELEASE_WIN_DIR):
         if f not in valid_files:
             try:
@@ -247,10 +252,28 @@ def publish_github_release(version, notes_content):
 
     print(f"Release successfully created/updated: {release_data.get('html_url')}")
 
-    # 2. Upload assets (Installer and Portable exe)
+    import hashlib
+    # 2. Upload assets (Installer, Portable exe, and compatibility mirror for in-app updates)
+    primary_installer = os.path.join(RELEASE_WIN_DIR, f"FORMAT_RELAY_{version}_Setup.exe")
+    portable_exe = os.path.join(RELEASE_WIN_DIR, "FORMAT_RELAY_Portable.exe")
+    compat_installer = os.path.join(RELEASE_WIN_DIR, f"FormatRelay-{version}-win-Setup.exe")
+    checksums_file = os.path.join(RELEASE_WIN_DIR, f"FormatRelay-{version}-SHA256SUMS.txt")
+
+    if os.path.exists(primary_installer):
+        shutil.copyfile(primary_installer, compat_installer)
+
+    with open(checksums_file, "w", encoding="utf-8") as cs_f:
+        for p in [primary_installer, compat_installer, portable_exe]:
+            if os.path.exists(p):
+                with open(p, "rb") as bf:
+                    h = hashlib.sha256(bf.read()).hexdigest()
+                cs_f.write(f"{h}  {os.path.basename(p)}\n")
+
     assets_to_upload = [
-        os.path.join(RELEASE_WIN_DIR, f"FORMAT_RELAY_{version}_Setup.exe"),
-        os.path.join(RELEASE_WIN_DIR, "FORMAT_RELAY_Portable.exe")
+        primary_installer,
+        compat_installer,
+        portable_exe,
+        checksums_file
     ]
 
     # Delete any duplicate existing assets

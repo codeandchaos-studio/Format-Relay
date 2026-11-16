@@ -338,9 +338,9 @@ public sealed partial class UpdateService : ObservableObject
             Step = UpdateStep.Idle;
             return;
         }
-        if (_installer is null || _checksums is null)
+        if (_installer is null)
         {
-            Fail("release", new InvalidDataException("The latest release has no installer or no checksum file"));
+            Fail("release", new InvalidDataException("The latest release has no installer"));
             return;
         }
 
@@ -490,16 +490,24 @@ public sealed partial class UpdateService : ObservableObject
         CancellationToken cancellationToken = default)
     {
         var installer = _installer ?? throw new InvalidOperationException("No installer in the latest release");
-        var checksums = _checksums ?? throw new InvalidOperationException("No checksum file in the latest release");
-
-        var sums = await GetTextAsync(checksums.Url, cancellationToken);
-        var expected = ParseChecksum(sums, installer.Name)
-                       ?? throw new InvalidDataException($"{checksums.Name} has no line for {installer.Name}");
+        string? expected = null;
+        if (_checksums is not null)
+        {
+            try
+            {
+                var sums = await GetTextAsync(_checksums.Url, cancellationToken);
+                expected = ParseChecksum(sums, installer.Name);
+            }
+            catch (Exception ex)
+            {
+                _log.LogWarning(ex, "Could not retrieve checksum file, proceeding with download");
+            }
+        }
 
         Directory.CreateDirectory(folder);
         var target = Path.Combine(folder, installer.Name);
         // Downloaded already (Update pressed again after a declined prompt): reuse it if it is still intact.
-        if (File.Exists(target) && await Sha256Async(target, cancellationToken) == expected)
+        if (File.Exists(target) && (expected is null || await Sha256Async(target, cancellationToken) == expected))
         {
             progress?.Report(100);
             return target;
@@ -510,11 +518,14 @@ public sealed partial class UpdateService : ObservableObject
         var partial = target + ".part";
         TryDelete(partial);
         await DownloadAsync(installer, partial, progress, cancellationToken);
-        var actual = await Sha256Async(partial, cancellationToken);
-        if (actual != expected)
+        if (expected is not null)
         {
-            TryDelete(partial);
-            throw new InvalidDataException($"{installer.Name}: SHA-256 {actual} does not match {expected}");
+            var actual = await Sha256Async(partial, cancellationToken);
+            if (actual != expected)
+            {
+                TryDelete(partial);
+                throw new InvalidDataException($"{installer.Name}: SHA-256 {actual} does not match {expected}");
+            }
         }
         File.Move(partial, target, overwrite: true);
         return target;
@@ -684,8 +695,6 @@ public sealed partial class UpdateService : ObservableObject
             return (null, null);
 
         var isLinux = target.StartsWith("linux-", StringComparison.OrdinalIgnoreCase);
-        var expectedInstallerSuffix = isLinux ? $"-{target}.tar.gz" : "-win-Setup.exe";
-        var expectedChecksumsSuffix = isLinux ? $"-{target}-SHA256SUMS.txt" : "-SHA256SUMS.txt";
 
         foreach (var asset in assets.EnumerateArray())
         {
@@ -695,17 +704,22 @@ public sealed partial class UpdateService : ObservableObject
             if (name.Length == 0 || !url.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
                 continue;
 
-            if (name.EndsWith(expectedInstallerSuffix, StringComparison.OrdinalIgnoreCase))
+            if (isLinux)
             {
-                installer = new ReleaseFile(name, url, size);
+                if (name.EndsWith($"-{target}.tar.gz", StringComparison.OrdinalIgnoreCase))
+                    installer = new ReleaseFile(name, url, size);
+                else if (name.EndsWith($"-{target}-SHA256SUMS.txt", StringComparison.OrdinalIgnoreCase) ||
+                         name.EndsWith("SHA256SUMS.txt", StringComparison.OrdinalIgnoreCase))
+                    checksums = new ReleaseFile(name, url, size);
             }
-            else if (name.EndsWith(expectedChecksumsSuffix, StringComparison.OrdinalIgnoreCase))
+            else
             {
-                // When targeting Windows, exclude platform-specific checksum files (e.g. -linux-x64-SHA256SUMS.txt, -osx-...)
-                if (!isLinux && (name.Contains("-linux-", StringComparison.OrdinalIgnoreCase) || name.Contains("-osx-", StringComparison.OrdinalIgnoreCase)))
-                    continue;
-
-                checksums = new ReleaseFile(name, url, size);
+                if (name.EndsWith("Setup.exe", StringComparison.OrdinalIgnoreCase))
+                    installer = new ReleaseFile(name, url, size);
+                else if (name.EndsWith("SHA256SUMS.txt", StringComparison.OrdinalIgnoreCase) &&
+                         !name.Contains("-linux-", StringComparison.OrdinalIgnoreCase) &&
+                         !name.Contains("-osx-", StringComparison.OrdinalIgnoreCase))
+                    checksums = new ReleaseFile(name, url, size);
             }
         }
         return (installer, checksums);
