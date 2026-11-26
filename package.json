@@ -1,6 +1,6 @@
 {
   "name": "format-relay",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Tactical local-first file conversion suite by Code & Chaos Studio",
   "homepage": "https://codeandchaos.dpdns.org/",
   "private": true,
