@@ -155,8 +155,105 @@ def build_executables(version):
     print(f" - {os.path.basename(output_installer)} ({os.path.getsize(output_installer)} bytes)")
     print(f" - {os.path.basename(portable_dest)} ({os.path.getsize(portable_dest)} bytes)")
 
-def create_release_notes(version):
-    return f"""# Format Relay v{version}
+KNOWN_RELEASES = {
+    "1.0.0": {
+        "title": "Format Relay v1.0.0 - Official Initial Launch",
+        "section_title": "⚡ Key Highlights & Initial Launch",
+        "intro": "Initial public release of Format Relay — the tactical, local-first conversion suite by Code & Chaos Studio:",
+        "items": [
+            "**Tactical Format Wheel:** Rapid-fire flick-and-release radial tool under your cursor (Shift + Drag in Explorer).",
+            "**Warm Cream & Flame Brand Aesthetic:** Bespoke light-themed design (`#F4EEE0`, `#FAF8EC`, `#1A1915`, `#EA4122`) with obsidian typography and high readability.",
+            "**Top Navigation Bar:** Streamlined modern interface featuring Home, General, Shortcuts, Engines, and About sections.",
+            "**Frameless Wordmark Setup:** Installer and uninstaller featuring frameless animated wordmark progress flows.",
+            "**High-Performance Engines:** 100% offline, local-first conversion across images, documents, audio, CAD, and 3D.",
+            "**Zero Cloud Dependency:** Completely private, telemetry-free, lifetime free utility."
+        ]
+    },
+    "1.0.1": {
+        "title": "Format Relay v1.0.1 - In-App Updater Reliability & Portal Update",
+        "section_title": "🐛 Updates & Improvements",
+        "intro": "This patch release brings critical updater enhancements and studio portal synchronization:",
+        "items": [
+            "**In-App Updater Reliability:** Fixed update package resolution in `UpdateService` to support generic setup asset naming and backward-compatible mirror assets (`FormatRelay-<version>-win-Setup.exe`).",
+            "**Cryptographic Verification:** Added automated SHA-256 integrity checksum generation (`FormatRelay-<version>-SHA256SUMS.txt`) ensuring secure, tamper-proof background downloads.",
+            "**Official Studio Portal Update:** Synchronized all in-app portal links, error dialogs, and fallback download prompts to `https://codeandchaos.dpdns.org/`.",
+            "**Automated Rebuild Pipeline:** Release tooling now guarantees clean, fresh compilation of all deliverables for every version bump."
+        ]
+    },
+    "1.1.0": {
+        "title": "Format Relay v1.1.0 - Presets & Quick-Profiles System",
+        "section_title": "⚡ Added Feature: Presets & Quick-Profiles System",
+        "intro": "In this release, we've activated the complete **Presets & Quick-Profiles** workspace, giving you fast, reusable conversion recipes:",
+        "items": [
+            "**Dedicated Presets Navigation:** New **Presets** tab located in the top navigation bar (`[Home] [General] [Presets] [Shortcuts] [Engines] [About]`).",
+            "**Custom Conversion Recipes:** Create, save, and manage custom profiles specifying target output format, encoding quality percentage, dimensions, aspect ratio lock, and image rotation/flip rules.",
+            "**Subfolder Organization Rules:** Route converted outputs into custom subdirectories automatically based on active preset settings.",
+            "**Search & Quick-Start:** Instant in-line search across preset profiles with ready-to-use factory templates.",
+            "**Dynamic Header Version Badge:** The header version badge now dynamically binds to the active app version (`v1.1.0`)."
+        ]
+    }
+}
+
+def get_previous_git_tag(target_version=None):
+    try:
+        res = subprocess.run(["git", "tag", "--sort=-v:refname"], cwd=ROOT_DIR, capture_output=True, text=True)
+        tags = [t.strip() for t in res.stdout.splitlines() if t.strip().startswith("v")]
+        target_tag = f"v{target_version}" if target_version else None
+        for tag in tags:
+            if target_tag and tag == target_tag:
+                continue
+            return tag
+    except Exception:
+        pass
+    return None
+
+def clean_commit_message(msg):
+    cleaned = re.sub(r'^(feat|fix|perf|refactor|docs|chore|style|ci|build)(\([^\)]+\))?:\s*', '', msg, flags=re.IGNORECASE).strip()
+    if cleaned:
+        cleaned = cleaned[0].upper() + cleaned[1:]
+    return cleaned
+
+def extract_git_commits(prev_tag):
+    range_spec = f"{prev_tag}..HEAD" if prev_tag else "HEAD~10..HEAD"
+    try:
+        res = subprocess.run(["git", "log", range_spec, "--no-merges", "--pretty=format:%s"], cwd=ROOT_DIR, capture_output=True, text=True)
+        raw_commits = [c.strip() for c in res.stdout.splitlines() if c.strip()]
+    except Exception:
+        return [], [], [], []
+
+    features = []
+    fixes = []
+    perf = []
+    others = []
+
+    for c in raw_commits:
+        if re.search(r'\b(release\s+v[0-9]+|bump\s+version)\b', c, re.IGNORECASE):
+            continue
+        low = c.lower()
+        cleaned = clean_commit_message(c)
+        if not cleaned:
+            continue
+
+        if low.startswith("feat"):
+            features.append(cleaned)
+        elif low.startswith("fix"):
+            fixes.append(cleaned)
+        elif low.startswith("perf") or low.startswith("refactor"):
+            perf.append(cleaned)
+        elif not low.startswith("chore"):
+            others.append(cleaned)
+
+    return features, fixes, perf, others
+
+def generate_release_notes(version, release_type=None):
+    # 1. Curated history check
+    if version in KNOWN_RELEASES:
+        entry = KNOWN_RELEASES[version]
+        title = entry["title"]
+        sec_title = entry["section_title"]
+        intro = entry.get("intro", "")
+        items_md = "\n".join([f"- {it}" for it in entry["items"]])
+        body = f"""# Format Relay v{version}
 
 **Official Release by Code & Chaos Studio**  
 🌐 **Official Portal:** [{STUDIO_URL}]({STUDIO_URL})  
@@ -164,18 +261,146 @@ def create_release_notes(version):
 
 ---
 
-### ⚡ Key Highlights & Features
-- **Tactical Format Wheel:** Rapid-fire flick-and-release radial tool under your cursor (Shift + Drag in Explorer).
-- **Warm Cream & Flame Brand Aesthetic:** Premium bespoke light-themed design with zero eye-strain and obsidian typography.
-- **Top Navigation Bar:** Streamlined modern interface with maximum workspace canvas.
-- **Automatic Patch Notifications:** In-app update notifications with one-click background upgrades.
-- **High-Performance Engines:** 100% offline, local-first conversion across images, documents, audio, CAD, and 3D.
-- **Zero Cloud Dependency:** Completely private, telemetry-free, lifetime free utility.
+### {sec_title}
+{intro}
+
+{items_md}
 
 ### 📦 Release Deliverables
 - `FORMAT_RELAY_{version}_Setup.exe`: Official Windows Installer with frameless wordmark loading animations
 - `FORMAT_RELAY_Portable.exe`: Standalone portable zero-install single executable
 """
+        return body, title, f"### {sec_title}\n{intro}\n\n{items_md}"
+
+    # 2. Check for pending manual notes file
+    pending_file = os.path.join(ROOT_DIR, "RELEASE_NOTES_PENDING.md")
+    if os.path.exists(pending_file):
+        with open(pending_file, "r", encoding="utf-8") as pf:
+            custom_content = pf.read().strip()
+        try:
+            os.remove(pending_file)
+        except Exception:
+            pass
+        if custom_content:
+            title = f"Format Relay v{version}"
+            body = f"""# Format Relay v{version}
+
+**Official Release by Code & Chaos Studio**  
+🌐 **Official Portal:** [{STUDIO_URL}]({STUDIO_URL})  
+📁 **Repository:** [github.com/{REPO_OWNER}/{REPO_NAME}](https://github.com/{REPO_OWNER}/{REPO_NAME})
+
+---
+
+{custom_content}
+
+### 📦 Release Deliverables
+- `FORMAT_RELAY_{version}_Setup.exe`: Official Windows Installer with frameless wordmark loading animations
+- `FORMAT_RELAY_Portable.exe`: Standalone portable zero-install single executable
+"""
+            return body, title, custom_content
+
+    # 3. Dynamic Git History Analysis
+    prev_tag = get_previous_git_tag(version)
+    features, fixes, perf, others = extract_git_commits(prev_tag)
+
+    sections = []
+    release_title = f"Format Relay v{version}"
+
+    # Single feature scenario
+    if len(features) == 1 and len(fixes) == 0:
+        feat_name = features[0]
+        release_title = f"Format Relay v{version} - {feat_name}"
+        sections.append(f"""### ⚡ Added Feature: {feat_name}
+In this release, we've added the following feature:
+- **{feat_name}**""")
+    else:
+        if features:
+            if len(features) == 1:
+                release_title = f"Format Relay v{version} - {features[0]}"
+            else:
+                release_title = f"Format Relay v{version} - Feature Update"
+            bullets = "\n".join([f"- **{f}**" for f in features])
+            sections.append(f"### ✨ Added Features\n{bullets}")
+
+        if fixes:
+            if not features:
+                release_title = f"Format Relay v{version} - Stability & Maintenance Update"
+            bullets = "\n".join([f"- {fx}" for fx in fixes])
+            sections.append(f"### 🐛 Fixes & Improvements\n{bullets}")
+
+        if perf:
+            bullets = "\n".join([f"- {p}" for p in perf])
+            sections.append(f"### ⚡ Optimizations & Performance\n{bullets}")
+
+        if others:
+            bullets = "\n".join([f"- {o}" for o in others])
+            sections.append(f"### 🔧 Internal & Maintenance\n{bullets}")
+
+    # Fallback if no commits were parsed
+    if not sections:
+        if release_type == "patch":
+            release_title = f"Format Relay v{version} - Stability & Maintenance Update"
+            sections.append("""### 🐛 Fixes & Maintenance
+- Internal stability enhancements, dependency updates, and engine optimizations.""")
+        elif release_type == "minor":
+            release_title = f"Format Relay v{version} - Feature Update"
+            sections.append("""### ⚡ Added Features
+- New workflow tools and format conversion capabilities.""")
+        elif release_type == "major":
+            release_title = f"Format Relay v{version} - Major Architecture Release"
+            sections.append("""### 🚀 Major Platform Release
+- Major architecture milestones, core engine upgrades, and enhanced conversion workflows.""")
+        else:
+            release_title = f"Format Relay v{version}"
+            sections.append("""### ⚡ Updates & Improvements
+- Official release update by Code & Chaos Studio.""")
+
+    content_sections = "\n\n".join(sections)
+    body = f"""# Format Relay v{version}
+
+**Official Release by Code & Chaos Studio**  
+🌐 **Official Portal:** [{STUDIO_URL}]({STUDIO_URL})  
+📁 **Repository:** [github.com/{REPO_OWNER}/{REPO_NAME}](https://github.com/{REPO_OWNER}/{REPO_NAME})
+
+---
+
+{content_sections}
+
+### 📦 Release Deliverables
+- `FORMAT_RELAY_{version}_Setup.exe`: Official Windows Installer with frameless wordmark loading animations
+- `FORMAT_RELAY_Portable.exe`: Standalone portable zero-install single executable
+"""
+    return body, release_title, content_sections
+
+def update_changelog(version, sections_content, release_title):
+    changelog_path = os.path.join(ROOT_DIR, "CHANGELOG.md")
+    if not os.path.exists(changelog_path):
+        return
+
+    with open(changelog_path, "r", encoding="utf-8") as f:
+        existing = f.read()
+
+    if f"## [{version}]" in existing:
+        return
+
+    import datetime
+    today = datetime.date.today().strftime("%Y-%m-%d")
+
+    entry = f"\n## [{version}] - {today}\n{sections_content.strip()}\n\n---\n"
+
+    parts = existing.split("---", 1)
+    if len(parts) == 2:
+        new_changelog = parts[0] + "---" + entry + parts[1].lstrip("\n")
+    else:
+        new_changelog = existing + entry
+
+    with open(changelog_path, "w", encoding="utf-8") as f:
+        f.write(new_changelog)
+    print(f"Updated CHANGELOG.md with release notes for v{version}")
+
+def create_release_notes(version):
+    body, _, _ = generate_release_notes(version)
+    return body
 
 def get_github_token():
     # 1. Environment variables
@@ -193,7 +418,7 @@ def get_github_token():
         pass
     return None
 
-def publish_github_release(version, notes_content):
+def publish_github_release(version, notes_content, release_name=None):
     token = get_github_token()
     if not token:
         print("\n[WARNING] GitHub token not detected. Git tags were pushed, but release was not published via API.")
@@ -222,7 +447,7 @@ def publish_github_release(version, notes_content):
     release_payload = {
         "tag_name": tag_name,
         "target_commitish": "main",
-        "name": f"Format Relay v{version}",
+        "name": release_name or f"Format Relay v{version}",
         "body": notes_content,
         "draft": False,
         "prerelease": False
@@ -357,15 +582,17 @@ def main():
         print(f" - {os.path.basename(installer_path)}")
         print(f" - {os.path.basename(portable_path)}")
 
-    notes = create_release_notes(new_v)
+    notes, release_title, content_sections = generate_release_notes(new_v, release_type=cmd)
     notes_file = os.path.join(ROOT_DIR, "RELEASE_NOTES.md")
     with open(notes_file, "w", encoding="utf-8") as f:
         f.write(notes)
 
+    update_changelog(new_v, content_sections, release_title)
+
     # Git commit and tag
     print("\nCommitting and tagging release...")
     run_cmd(["git", "-C", ROOT_DIR, "add", "-A"])
-    commit_msg = f"feat: release v{new_v} - Format Relay official release"
+    commit_msg = f"feat: release v{new_v} - {release_title}"
     try:
         run_cmd(["git", "-C", ROOT_DIR, "commit", "-m", commit_msg])
     except Exception as e:
@@ -381,7 +608,7 @@ def main():
     run_cmd(["git", "-C", ROOT_DIR, "push", "origin", "main:master", "--tags", "--force"])
 
     # Publish GitHub Release with assets
-    publish_github_release(new_v, notes)
+    publish_github_release(new_v, notes, release_name=release_title)
 
     print(f"\n[SUCCESS] Successfully released Format Relay v{new_v}!")
     print(f"Tag: {tag_name}")

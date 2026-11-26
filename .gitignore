@@ -39,3 +39,7 @@ publish/
 
 # Scratch & Temporary Build Artifacts
 scratch/
+
+# Python
+__pycache__/
+*.pyc

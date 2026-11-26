@@ -6,13 +6,14 @@
 
 ---
 
-### ⚡ Key Highlights & Features
-- **Tactical Format Wheel:** Rapid-fire flick-and-release radial tool under your cursor (Shift + Drag in Explorer).
-- **Warm Cream & Flame Brand Aesthetic:** Premium bespoke light-themed design with zero eye-strain and obsidian typography.
-- **Top Navigation Bar:** Streamlined modern interface with maximum workspace canvas.
-- **Automatic Patch Notifications:** In-app update notifications with one-click background upgrades.
-- **High-Performance Engines:** 100% offline, local-first conversion across images, documents, audio, CAD, and 3D.
-- **Zero Cloud Dependency:** Completely private, telemetry-free, lifetime free utility.
+### ⚡ Added Feature: Presets & Quick-Profiles System
+In this release, we've activated the complete **Presets & Quick-Profiles** workspace, giving you fast, reusable conversion recipes:
+
+- **Dedicated Presets Navigation:** New **Presets** tab located in the top navigation bar (`[Home] [General] [Presets] [Shortcuts] [Engines] [About]`).
+- **Custom Conversion Recipes:** Create, save, and manage custom profiles specifying target output format, encoding quality percentage, dimensions, aspect ratio lock, and image rotation/flip rules.
+- **Subfolder Organization Rules:** Route converted outputs into custom subdirectories automatically based on active preset settings.
+- **Search & Quick-Start:** Instant in-line search across preset profiles with ready-to-use factory templates.
+- **Dynamic Header Version Badge:** The header version badge now dynamically binds to the active app version (`v1.1.0`).
 
 ### 📦 Release Deliverables
 - `FORMAT_RELAY_1.1.0_Setup.exe`: Official Windows Installer with frameless wordmark loading animations
