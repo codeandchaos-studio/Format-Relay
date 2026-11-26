@@ -70,6 +70,7 @@ public sealed partial class MainWindowViewModel : ObservableObject, IDisposable
         [
             new("home", "nav.home", "Icon.Home", typeof(HomePageViewModel)),
             new("general", "nav.general", "Icon.Settings", typeof(GeneralPageViewModel)),
+            new("presets", "nav.presets", "Icon.Tune", typeof(PresetsPageViewModel)),
             new("triggers", "nav.triggers", "Icon.Keyboard", typeof(TriggersPageViewModel)),
             new("engines", "nav.engines", "Icon.Engine", typeof(EnginesPageViewModel)),
             new("about", "nav.about", "Icon.Info", typeof(AboutPageViewModel)),
@@ -122,6 +123,7 @@ public sealed partial class MainWindowViewModel : ObservableObject, IDisposable
     /// (<see cref="IFitsWindowHeight"/>, e.g. the presets list and editor).
     /// </summary>
     public ScrollBarVisibility PageScroll => CurrentPage is IFitsWindowHeight ? ScrollBarVisibility.Disabled : ScrollBarVisibility.Auto;
+    public string VersionBadge => "v" + UpdateService.CurrentVersion;
     [ObservableProperty] private string _versionText = "";
     [ObservableProperty] private string _updateText = "";
     [ObservableProperty] private string _updateTip = "";
